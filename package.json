@@ -1,0 +1,23 @@
+{
+  "name": "thoughtdoc",
+  "version": "1.0.0",
+  "description": "Full-stack interface for a MySQL database.",
+  "main": "App.js",
+  "scripts": {
+    "backend": "nodemon server/App.js",
+    "frontend": "npm start --prefix client",
+    "frontend-install": "npm install --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
+  "author": "Tom Reilly",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
