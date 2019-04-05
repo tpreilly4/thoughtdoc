@@ -32,12 +32,11 @@ class Input extends Component {
               }
             }}
             >Add Your Thoughts</Button>
-
-          <ListGroup style={{margin:'2rem'}}>
+          <div className="flex-container" style={{marginTop:'2rem'}}>
             {thoughts.map( (index, id)  => (
-              <ListGroupItem key={id}>{ index.content }</ListGroupItem>
+              <div key={id}><p>{ index.content }</p></div>
             ))}
-          </ListGroup>  
+          </div>  
           
       </Container>
     )
