@@ -4,7 +4,7 @@
   "description": "Full-stack interface for a MySQL database.",
   "main": "App.js",
   "scripts": {
-    "backend": "nodemon server/App.js",
+    "backend": "node server/App.js",
     "frontend": "npm start --prefix client",
     "frontend-install": "npm install --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
@@ -15,7 +15,7 @@
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "knex": "^0.16.3",
-    "mysql": "^2.16.0"
+    "pg": "^7.9.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
