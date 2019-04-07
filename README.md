@@ -1,9 +1,9 @@
 # thoughtdoc
 A place to store, organize, and analyze your thoughts - with an emphasis on mental health introspection.
-To be built with **Node, Express, React, Redux, Postgres/Knex**, and more.
+To be built with **Node, Express, React, Postgres**, and more.
 
 
-###Setup
+### Setup
 It's all local in the current state. Backend is not yet functional, but runs (after an **npm install**) with **npm run backend**
 To install frontend dependencies, from the root folder: **npm run frontend-install**
 To run the frontend, from the root folder: **npm run frontend** 
