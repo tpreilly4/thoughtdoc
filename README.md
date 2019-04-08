@@ -4,9 +4,11 @@ To be built with **Node, Express, React, Postgres**, and more.
 
 
 ### Setup
-It's all local in the current state. Backend is not yet functional, but runs (after an **npm install**) with **npm run backend**
-To install frontend dependencies, from the root folder: **npm run frontend-install**
-To run the frontend, from the root folder: **npm run frontend** 
+It's all local in the current state. You must be running a Postgres Database on port 5432.
+First, `npm install` followed by `npm run frontend-install`.
+From the root folder, `npm run dev` will run the whole app.
+From the root folder, `npm run backend` will run the server side only.
+From the root folder: `npm run frontend` will run the client side only.
 
 
 # Use Cases

@@ -1,57 +1,60 @@
 import React, { Component } from 'react';
 import { Button, Container } from 'reactstrap';
+import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 
 
+/* This component is becoming too large and needs to be restructured*/
 class Input extends Component {
+
   constructor(props) {
   super(props);
     this.state = {
-      thoughts : [
-        { 
-          id: 1,
-          content: "Content1",
-          mood: "Mood1",
-          timestamp: "timetime"
-        },
-        { 
-          id:5,
-          content: "Content2",
-          mood: "Mood2",
-          timestamp: "timetimetime"
-        },
-      ]
+      thoughts : []
     }
   }
 
-  // constructor(props) {
-  // super(props);
-  //   this.state = { thoughts: [
+  // handles posts to db and makes call to syncAPI() to update state
+  // data parameter comes from prompt in render method
+  giveThoughtsToAPI = (data) => {
+    axios.post('http://localhost:5000/thoughts/', {
+      content: data
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    //update state
+    .then(()=>{
+      this.syncAPI();
+    });
+  }
 
-  //   ]};
-  // }
-
-  //fetch call to grab items in our db
-  getThoughtsFromAPI() {
-    fetch("http://localhost:5000/thoughts/")
-      .then(res => {return res.json()})
-      .then(res => this.setState(state => ({
-        thoughts: state.thoughts.concat(res)
-      })));        
+  // handles syncing API with this.state
+  syncAPI = () => {
+    axios.get('http://localhost:5000/thoughts/')
+    //handle success
+    .then(res => {
+      console.log("syncing state with API")
+      this.setState(state => ({
+        thoughts: res.data
+      }))})
+    //handle error
+    .catch(err => {console.log(err)}) 
   }
 
   componentWillMount() {
-      this.getThoughtsFromAPI();
+      this.syncAPI();
   }
 
   render() {
 
     const  { thoughts } = this.state;
     
-    console.log(thoughts);
-
     return (
       <Container>
         <Button 
@@ -61,14 +64,13 @@ class Input extends Component {
               const content = prompt('Your thoughts go here');
               //add it to state if user enters something
               if(content) {
-                this.setState(state => ({
-                  thoughts: [...state.thoughts, { content }]
-                }));
+                this.giveThoughtsToAPI(content);
               }
             }}
-            >Add Your Thoughts</Button>
+            >Add Your Thoughts
+          </Button>
+
           <div className="flex-container" style={{marginTop:'2rem'}}>
-          {/* <p>{this.state.apiResponse}</p> */}
             {thoughts.map( (index, id)  => (
               <div key={id}>
                 <p>{ `ID: ${index.id}` }</p>
@@ -78,7 +80,6 @@ class Input extends Component {
               </div>
             ))}
           </div>  
-          
       </Container>
     )
   }
