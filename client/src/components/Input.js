@@ -16,9 +16,9 @@ class Input extends Component {
     }
   }
 
-  // handles posts to db and makes call to syncAPI() to update state
+  // handles posts to db and makes call to getAllThoughts() to update state
   // data parameter comes from prompt in render method
-  giveThoughtsToAPI = (data) => {
+  postThought = (data) => {
     axios.post('http://localhost:5000/thoughts/', {
       content: data
     })
@@ -30,12 +30,30 @@ class Input extends Component {
     })
     //update state
     .then(()=>{
-      this.syncAPI();
+      this.getAllThoughts();
     });
   }
 
+  // handles deletes from db and makes a call to getAllThoughts() to update state
+  // id parameter comes from onClick() of corresponding thought view.
+  deleteThought = (id) => {
+    axios.delete(`http://localhost:5000/thoughts/${id}`)
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then( (id) => {
+        this.setState( state => ({
+          thoughts: state.thoughts.filter(thought => thought.id !== id )
+        }));
+      })
+      .then(()=>{
+        this.getAllThoughts();
+      });
+  }
+
+  
   // handles syncing API with this.state
-  syncAPI = () => {
+  getAllThoughts = () => {
     axios.get('http://localhost:5000/thoughts/')
     //handle success
     .then(res => {
@@ -48,7 +66,7 @@ class Input extends Component {
   }
 
   componentWillMount() {
-      this.syncAPI();
+      this.getAllThoughts();
   }
 
   render() {
@@ -64,19 +82,31 @@ class Input extends Component {
               const content = prompt('Your thoughts go here');
               //add it to state if user enters something
               if(content) {
-                this.giveThoughtsToAPI(content);
+                this.postThought(content);
               }
             }}
             >Add Your Thoughts
           </Button>
 
           <div className="flex-container" style={{marginTop:'2rem'}}>
-            {thoughts.map( (index, id)  => (
+            {thoughts.map(({id, mood, content, timestamp})  => (
               <div key={id}>
-                <p>{ `ID: ${index.id}` }</p>
-                <p>{ `Mood: ${index.mood}` }</p>
-                <p>{ `Content: ${index.content}` }</p>
-                <p>{ `Timestamp: ${index.timestamp}` }</p>
+                <Button
+                  className="remove-btn"
+                  color="danger"
+                  size="sm"
+                  style={{
+                    marginRight: "auto"
+                  }}
+                  onClick={ () =>
+                    this.deleteThought(id)
+                  }
+                  >&times;
+                </Button>
+                <p>{ `ID: ${id}` }</p>
+                <p>{ `Mood: ${mood}` }</p>
+                <p>{ `Content: ${content}` }</p>
+                <p>{ `Timestamp: ${timestamp}` }</p>
               </div>
             ))}
           </div>  

@@ -1,6 +1,6 @@
 # thoughtdoc
 A place to store, organize, and analyze your thoughts - with an emphasis on mental health introspection.
-To be built with **Node, Express, React, Postgres**, and more.
+To be built with **Node, Express, React, Postgres, Axios**, and more.
 
 
 ### Setup
@@ -103,3 +103,5 @@ The user should be able to:
    </td>
   </tr>
 </table>
+
+[First attempt at a Trello Board](https://trello.com/b/C7Mz7siT/thoughtdoc)
