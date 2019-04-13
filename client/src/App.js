@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Input from './components/Input';
+import ThoughtCard from './components/ThoughtCard';
 
 class App extends Component {
   render() {

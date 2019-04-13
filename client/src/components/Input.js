@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
+import ThoughtCard from './ThoughtCard';
 
 
 /* This component is becoming too large and needs to be restructured*/
@@ -51,7 +52,6 @@ class Input extends Component {
       });
   }
 
-  
   // handles syncing API with this.state
   getAllThoughts = () => {
     axios.get('http://localhost:5000/thoughts/')
@@ -90,24 +90,14 @@ class Input extends Component {
 
           <div className="flex-container" style={{marginTop:'2rem'}}>
             {thoughts.map(({id, mood, content, timestamp})  => (
-              <div key={id}>
-                <Button
-                  className="remove-btn"
-                  color="danger"
-                  size="sm"
-                  style={{
-                    marginRight: "auto"
-                  }}
-                  onClick={ () =>
-                    this.deleteThought(id)
-                  }
-                  >&times;
-                </Button>
-                <p>{ `ID: ${id}` }</p>
-                <p>{ `Mood: ${mood}` }</p>
-                <p>{ `Content: ${content}` }</p>
-                <p>{ `Timestamp: ${timestamp}` }</p>
-              </div>
+              <ThoughtCard 
+                key={id}
+                deleteThought={this.deleteThought}
+                content={content}
+                id={id}
+                mood={mood}
+                timeStamp={timestamp}
+                />
             ))}
           </div>  
       </Container>
